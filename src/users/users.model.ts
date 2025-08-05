@@ -27,20 +27,20 @@ export class User extends Model<User, UserCreationAttrs> {
 
   @ApiProperty({ example: 'user@mail.ru', description: 'Email address' })
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
-  email: string;
+  declare email: string; // Declare instead of defining as public field
 
   @ApiProperty({ example: '12345678', description: 'Password' })
   @Column({ type: DataType.STRING, allowNull: false })
-  password: string;
+  declare password: string;
 
   @ApiProperty({ example: 'true', description: 'Is banned or not' })
   @Column({ type: DataType.BOOLEAN, defaultValue: false })
-  banned: boolean;
+  declare banned: boolean;
 
   @ApiProperty({ example: 'For hooliganism', description: 'Ban reason' })
   @Column({ type: DataType.STRING, allowNull: true })
-  banReason: string;
+  declare banReason: string;
 
   @BelongsToMany(() => Role, () => UserRoles)
-  roles: Role[];
+  declare roles: Role[];
 }

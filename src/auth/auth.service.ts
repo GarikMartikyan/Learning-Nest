@@ -14,6 +14,7 @@ export class AuthService {
 
   async login(userDto: CreateUserDto) {
     const user = await this.validateUser(userDto);
+    console.log('Trying To Find Garik', user.dataValues);
     return this.generateToken(user);
   }
 
@@ -42,13 +43,15 @@ export class AuthService {
 
   private async validateUser(userDto: CreateUserDto) {
     const user = await this.userService.getUserByEmail(userDto.email);
-    if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    if (!user?.dataValues) {
+      throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);
     }
+    const userData = user.dataValues;
     const passwordEquals = await bcrypt.compare(
       userDto.password,
-      user.password,
+      userData.password,
     );
+
     if (user && passwordEquals) {
       return user;
     }

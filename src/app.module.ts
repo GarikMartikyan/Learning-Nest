@@ -24,6 +24,7 @@ import { AuthModule } from './auth/auth.module';
       database: process.env.POSTGRES_DB,
       models: [User, Role, UserRoles],
       autoLoadModels: true,
+      logging: false,
     }),
     UsersModule,
     RolesModule,
