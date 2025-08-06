@@ -1,5 +1,3 @@
-// src/pipes/custom-validation.pipe.ts
-
 import {
   ArgumentMetadata,
   Injectable,

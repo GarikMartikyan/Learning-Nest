@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { User } from './users.model';
-import { Roles } from '../auth/roles-auth.decorator';
+import { Roles } from '../common/decorators/roles-auth.decorator';
 import { RolesGuard } from '../auth/roles.guard';
 import { AddRoleDto } from './dto/add-role.dto';
 import { BanUserDto } from './dto/ban-user.dto';
@@ -23,7 +23,7 @@ export class UsersController {
   }
 
   @ApiOperation({ summary: 'Adds role to user' })
-  @ApiResponse({ status: 200, type: User })
+  @CustomApiResponse({ status: 200, type: User })
   @Roles('ADMIN')
   @UseGuards(RolesGuard)
   @Post('/role')
@@ -32,7 +32,7 @@ export class UsersController {
   }
 
   @ApiOperation({ summary: 'Bans user' })
-  @ApiResponse({ status: 200, type: User })
+  @CustomApiResponse({ status: 200, type: User })
   @Roles('ADMIN')
   @UseGuards(RolesGuard)
   @Post('/ban')

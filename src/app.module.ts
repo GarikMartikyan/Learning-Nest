@@ -8,6 +8,11 @@ import { RolesModule } from './roles/roles.module';
 import { Role } from './roles/roles.model';
 import { UserRoles } from './roles/user-roles.model';
 import { AuthModule } from './auth/auth.module';
+import { PostsModule } from './posts/posts.module';
+import { Post } from './posts/posts.model';
+import { FilesModule } from './files/files.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import * as path from 'node:path';
 
 @Module({
   controllers: [],
@@ -22,13 +27,18 @@ import { AuthModule } from './auth/auth.module';
       port: Number(process.env.POSTGRES_PORT),
       username: process.env.POSTGRES_USER,
       database: process.env.POSTGRES_DB,
-      models: [User, Role, UserRoles],
+      models: [User, Role, UserRoles, Post],
       autoLoadModels: true,
       logging: false,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: path.resolve(__dirname, 'static'),
     }),
     UsersModule,
     RolesModule,
     AuthModule,
+    PostsModule,
+    FilesModule,
   ],
 })
 export class AppModule {}
